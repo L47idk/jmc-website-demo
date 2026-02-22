@@ -18,6 +18,7 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Gallery', path: '/gallery' },
+    { name: 'Notice Board', path: '/notices' },
     { name: 'Contact', path: '/contact' },
     { name: 'Panel', path: '/panel' },
   ];
@@ -32,7 +33,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
               {logoUrl ? (
-                <img src={logoUrl}  alt="Logo" className="h-10 w-10 object-contain" referrerPolicy="no-referrer" />
+                <img src={logoUrl} alt="Logo" className="h-10 w-10 object-contain" referrerPolicy="no-referrer" />
               ) : (
                 <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center text-black font-bold text-xl shadow-lg shadow-amber-500/20">
                   J

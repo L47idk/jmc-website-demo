@@ -2,45 +2,35 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue, useScroll, useTransform } from 'motion/react';
 
-const formulas = [
-  "e^{i\\pi} + 1 = 0",
-  "\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}",
-  "\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\epsilon_0}",
-  "\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}",
-  "i\\hbar\\frac{\\partial}{\\partial t}\\Psi = \\hat{H}\\Psi",
-  "R_{\\mu\\nu} - \\frac{1}{2}Rg_{\\mu\\nu} = 8\\pi G T_{\\mu\\nu}",
-  "a^2 + b^2 = c^2",
-  "E = mc^2",
-  "f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!}(x-a)^n",
-  "\\zeta(s) = \\sum_{n=1}^{\\infty} n^{-s}",
-  "\\oint \\mathbf{B} \\cdot d\\mathbf{l} = \\mu_0 I",
-  "\\frac{d}{dx}\\ln(x) = \\frac{1}{x}",
-  "\\sin^2\\theta + \\cos^2\\theta = 1",
-  "P(A|B) = \\frac{P(B|A)P(A)}{P(B)}",
-  "\\mathbf{F} = m\\mathbf{a}",
-  "\\Delta x \\Delta p \\ge \\frac{\\hbar}{2}"
-];
-
 const integrationFormulas = [
-  "\\int x^n dx = \\frac{x^{n+1}}{n+1} + C",
-  "\\int e^x dx = e^x + C",
-  "\\int \\frac{1}{x} dx = \\ln|x| + C",
-  "\\int \\sin x dx = -\\cos x + C",
-  "\\int \\cos x dx = \\sin x + C",
-  "\\int \\sec^2 x dx = \\tan x + C",
-  "\\int \\frac{1}{1+x^2} dx = \\arctan x + C",
-  "\\int \\ln x dx = x \\ln x - x + C",
-  "\\int \\frac{1}{\\sqrt{1-x^2}} dx = \\arcsin x + C",
-  "\\int udv = uv - \\int vdu"
+  "∫ xⁿ dx = xⁿ⁺¹/(n+1) + C",
+  "∫ eˣ dx = eˣ + C",
+  "∫ 1/x dx = ln|x| + C",
+  "∫ sin x dx = -cos x + C",
+  "∫ cos x dx = sin x + C",
+  "∫ sec² x dx = tan x + C",
+  "∫ 1/(1+x²) dx = arctan x + C",
+  "∫ ln x dx = x ln x - x + C",
+  "∫ 1/√(1-x²) dx = arcsin x + C",
+  "∫ u dv = uv - ∫ v du",
+  "∫ tan x dx = ln|sec x| + C",
+  "∫ cot x dx = ln|sin x| + C",
+  "∫ sec x dx = ln|sec x + tan x| + C",
+  "∫ csc x dx = ln|csc x - cot x| + C",
+  "∫ aˣ dx = aˣ/ln a + C",
+  "∫ 1/√(a²-x²) dx = arcsin(x/a) + C",
+  "∫ 1/(a²+x²) dx = (1/a)arctan(x/a) + C",
+  "∫ sinh x dx = cosh x + C",
+  "∫ cosh x dx = sinh x + C"
 ];
 
 const FormulaElement = ({ el, smoothX, smoothY, scrollY }: { el: any, smoothX: any, smoothY: any, scrollY: any }) => {
   // Calculate scroll parallax based on element size (depth)
-  const scrollOffset = useTransform(scrollY, [0, 1000], [0, el.size * -150]);
+  const scrollOffset = useTransform(scrollY, [0, 1000], [0, el.size * -100]);
   
   // Combine mouse and scroll parallax
-  const x = useTransform(smoothX, (val: number) => val * (el.size * 30));
-  const y = useTransform([smoothY, scrollOffset], ([mY, sO]: any) => mY * (el.size * 30) + sO);
+  const x = useTransform(smoothX, (val: number) => val * (el.size * 20));
+  const y = useTransform([smoothY, scrollOffset], ([mY, sO]: any) => mY * (el.size * 20) + sO);
 
   return (
     <motion.div
@@ -52,14 +42,15 @@ const FormulaElement = ({ el, smoothX, smoothY, scrollY }: { el: any, smoothX: a
         rotate: el.rotate,
         x,
         y,
-        opacity: 0.04,
+        opacity: 0.08,
         color: '#F59E0B',
-        fontFamily: 'serif',
+        fontFamily: 'var(--font-handwritten), cursive',
         whiteSpace: 'nowrap',
         userSelect: 'none',
+        willChange: 'transform',
       }}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 0.04 }}
+      animate={{ opacity: 0.08 }}
       transition={{ duration: 2 }}
     >
       {el.text}
@@ -67,21 +58,40 @@ const FormulaElement = ({ el, smoothX, smoothY, scrollY }: { el: any, smoothX: a
   );
 };
 
-const ScrollingFormula = ({ text, delay }: { text: string, delay: number }) => (
-  <motion.div
-    initial={{ y: '110vh', opacity: 0, x: `${Math.random() * 80 + 10}vw` }}
-    animate={{ y: '-20vh', opacity: [0, 0.1, 0.1, 0] }}
-    transition={{ 
-      duration: 15, 
-      delay, 
-      repeat: Infinity, 
-      ease: "linear" 
-    }}
-    className="fixed pointer-events-none text-amber-500/20 font-serif text-lg whitespace-nowrap z-[-5]"
-  >
-    {text}
-  </motion.div>
-);
+const BubbleFormula = ({ text, delay }: { text: string, delay: number }) => {
+  const [pos] = useState({
+    x: Math.random() * 80 + 10,
+    y: Math.random() * 80 + 10,
+    scale: Math.random() * 0.4 + 0.7
+  });
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ 
+        opacity: [0.05, 0.05, 0.5, 0.05, 0.05],
+        scale: [pos.scale, pos.scale * 1.1, pos.scale],
+        y: [0, -40, 0],
+        x: [0, 20, 0]
+      }}
+      transition={{ 
+        duration: 10 + Math.random() * 5, 
+        delay, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }}
+      style={{
+        left: `${pos.x}vw`,
+        top: `${pos.y}vh`,
+        fontFamily: 'var(--font-handwritten), cursive',
+        willChange: 'transform, opacity',
+      }}
+      className="fixed pointer-events-none text-amber-400 text-2xl whitespace-nowrap z-[-5] drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+    >
+      {text}
+    </motion.div>
+  );
+};
 
 const BackgroundFormulas = () => {
   const [elements, setElements] = useState<{ id: number, text: string, x: number, y: number, size: number, rotate: number }[]>([]);
@@ -92,22 +102,22 @@ const BackgroundFormulas = () => {
   const { scrollY } = useScroll();
 
   // Smooth out mouse movement
-  const springConfig = { damping: 30, stiffness: 100 };
+  const springConfig = { damping: 40, stiffness: 80 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const newElements = Array.from({ length: 30 }).map((_, i) => ({
+    const newElements = Array.from({ length: 45 }).map((_, i) => ({
       id: i,
-      text: formulas[Math.floor(Math.random() * formulas.length)],
+      text: integrationFormulas[Math.floor(Math.random() * integrationFormulas.length)],
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 1.2 + 0.6,
-      rotate: Math.random() * 40 - 20,
+      size: Math.random() * 1.2 + 1.0,
+      rotate: Math.random() * 30 - 15,
     }));
     setElements(newElements);
 
-    const timer = setTimeout(() => setShowIntegrations(true), 3000);
+    const timer = setTimeout(() => setShowIntegrations(true), 1500);
 
     const handleMouseMove = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -138,7 +148,7 @@ const BackgroundFormulas = () => {
       ))}
 
       {showIntegrations && integrationFormulas.map((formula, i) => (
-        <ScrollingFormula key={i} text={formula} delay={i * 3} />
+        <BubbleFormula key={i} text={formula} delay={i * 2} />
       ))}
 
       <div className="absolute inset-0 opacity-10">

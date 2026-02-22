@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useContent } from '../context/ContentContext';
 import { motion } from 'motion/react';
-import { Save, Edit3, Image as ImageIcon, Plus, Trash2, Users, Shield, ShieldAlert } from 'lucide-react';
+import { Save, Edit3, Image as ImageIcon, Plus, Trash2, Users, Shield, ShieldAlert, Bell, Upload } from 'lucide-react';
 import { collection, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../lib/firebase';
 
 const AdminDashboard = () => {
   const { isAdmin } = useAuth();
@@ -17,6 +18,7 @@ const AdminDashboard = () => {
   const [manualUid, setManualUid] = useState('');
   const [promoting, setPromoting] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState<string | null>(null);
   const [updatingUser, setUpdatingUser] = useState<string | null>(null);
 
   React.useEffect(() => {
@@ -104,7 +106,12 @@ const AdminDashboard = () => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await updateContent(activeTab, localContent[activeTab]);
+      // If we are on notices tab, we save the whole notices array
+      if (activeTab === 'notices') {
+        await updateContent('notices', localContent.notices);
+      } else {
+        await updateContent(activeTab, localContent[activeTab]);
+      }
       alert('Content updated successfully!');
     } catch (error) {
       console.error("Error saving content:", error);
@@ -114,11 +121,98 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, section: string, index?: number, field?: string, nestedField?: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    const isValidExtension = ['jpg', 'jpeg', 'png'].includes(fileExtension || '');
+
+    if (!validTypes.includes(file.type) && !isValidExtension) {
+      alert("Only .jpg and .png formats are allowed.");
+      return;
+    }
+
+    const uploadId = `${section}-${index || 'main'}-${field || 'image'}${nestedField ? '-' + nestedField : ''}`;
+    setUploading(uploadId);
+
+    try {
+      const storageRef = ref(storage, `images/${Date.now()}-${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+
+      const newContent = { ...localContent };
+      if (index !== undefined && field) {
+        if (nestedField) {
+          newContent[section][field][index][nestedField] = url;
+        } else {
+          newContent[section][index][field] = url;
+        }
+      } else if (field) {
+        newContent[section][field] = url;
+      } else {
+        // Default case if needed
+      }
+      
+      setLocalContent(newContent);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image.");
+    } finally {
+      setUploading(null);
+    }
+  };
+
   const updateField = (section: string, field: string, value: any) => {
     setLocalContent({
       ...localContent,
       [section]: { ...localContent[section], [field]: value }
     });
+  };
+
+  const ImageUploadField = ({ section, index, field, nestedField, value, placeholder = "Image URL" }: { section: string, index?: number, field?: string, nestedField?: string, value: string, placeholder?: string }) => {
+    const uploadId = `${section}-${index || 'main'}-${field || 'image'}${nestedField ? '-' + nestedField : ''}`;
+    const isUploading = uploading === uploadId;
+
+    return (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-4 p-4 bg-black/20 border border-white/10 rounded-xl">
+          {value ? (
+            <div className="h-12 w-12 rounded-lg overflow-hidden bg-black/40 flex-shrink-0">
+              <img src={value} alt="Preview" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+            </div>
+          ) : (
+            <div className="h-12 w-12 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
+              <ImageIcon className="w-6 h-6 text-zinc-600" />
+            </div>
+          )}
+          <div className="flex-grow">
+            <div className="text-xs font-bold text-zinc-500 uppercase mb-1">
+              {value ? 'Image Uploaded' : 'No Image Selected'}
+            </div>
+            <div className="text-[10px] text-zinc-600 truncate max-w-[200px]">
+              {value || 'Upload .jpg or .png'}
+            </div>
+          </div>
+          <label className="cursor-pointer px-4 py-2 bg-amber-600/10 hover:bg-amber-600/20 text-amber-500 rounded-lg transition-all flex items-center justify-center gap-2 text-xs font-bold">
+            {isUploading ? (
+              <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              <Upload className="w-4 h-4" />
+            )}
+            {value ? 'Change' : 'Upload'}
+            <input 
+              type="file" 
+              className="hidden" 
+              accept=".jpg,.jpeg,.png"
+              onChange={(e) => handleImageUpload(e, section, index, field, nestedField)}
+            />
+          </label>
+        </div>
+      </div>
+    );
   };
 
   const updateFeature = (index: number, field: string, value: any) => {
@@ -136,7 +230,7 @@ const AdminDashboard = () => {
       <div className="w-72 bg-white/5 backdrop-blur-xl border-r border-white/10 p-8">
         <h2 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-8">Management</h2>
         <nav className="space-y-3">
-          {['site', 'home', 'about', 'panel', 'gallery', 'contact', 'users'].map((tab) => (
+          {['site', 'home', 'about', 'panel', 'gallery', 'notices', 'contact', 'users'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -146,6 +240,7 @@ const AdminDashboard = () => {
             >
               {tab === 'users' && <Users className="w-4 h-4" />}
               {tab === 'panel' && <Users className="w-4 h-4" />}
+              {tab === 'notices' && <Bell className="w-4 h-4" />}
               {tab.charAt(0).toUpperCase() + tab.slice(1)} Settings
             </button>
           ))}
@@ -190,15 +285,13 @@ const AdminDashboard = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-400 mb-2">Logo Image URL</label>
-                  <input
-                    type="text"
-                    placeholder="https://example.com/logo.png"
-                    value={localContent.site?.logoUrl || ''}
-                    onChange={(e) => updateField('site', 'logoUrl', e.target.value)}
-                    className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-amber-500 outline-none"
+                  <label className="block text-sm font-medium text-zinc-400 mb-2">Club Logo</label>
+                  <ImageUploadField 
+                    section="site" 
+                    field="logoUrl" 
+                    value={localContent.site?.logoUrl || ''} 
                   />
-                  <p className="text-xs text-zinc-500 mt-2 italic">Provide a direct link to your club logo image.</p>
+                  <p className="text-xs text-zinc-500 mt-2 italic">Upload your club logo (.jpg or .png).</p>
                 </div>
               </div>
             </section>
@@ -253,11 +346,13 @@ const AdminDashboard = () => {
                     <div key={i} className="p-6 bg-white/5 rounded-2xl border border-white/5 relative group">
                       <button
                         onClick={() => {
-                          const newFeatures = localContent.home.features.filter((_: any, idx: number) => idx !== i);
-                          setLocalContent({
-                            ...localContent,
-                            home: { ...localContent.home, features: newFeatures }
-                          });
+                          if (window.confirm('Are you sure you want to delete this feature?')) {
+                            const newFeatures = localContent.home.features.filter((_: any, idx: number) => idx !== i);
+                            setLocalContent({
+                              ...localContent,
+                              home: { ...localContent.home, features: newFeatures }
+                            });
+                          }
                         }}
                         className="absolute top-4 right-4 p-2 text-zinc-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                       >
@@ -330,30 +425,49 @@ const AdminDashboard = () => {
                   <div key={i} className="p-6 bg-white/5 rounded-2xl border border-white/5 relative group">
                     <button
                       onClick={() => {
-                        const newGallery = localContent.gallery.filter((_: any, idx: number) => idx !== i);
-                        setLocalContent({ ...localContent, gallery: newGallery });
+                        if (window.confirm('Are you sure you want to delete this gallery image?')) {
+                          const newGallery = localContent.gallery.filter((_: any, idx: number) => idx !== i);
+                          setLocalContent({ ...localContent, gallery: newGallery });
+                        }
                       }}
                       className="absolute top-4 right-4 p-2 text-zinc-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                     <div className="space-y-4">
-                      {img.url && (
-                        <div className="aspect-video rounded-lg overflow-hidden bg-black/20">
+                      {img.url ? (
+                        <div className="aspect-video rounded-lg overflow-hidden bg-black/20 relative group/img">
                           <img src={img.url} alt="Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all flex items-center justify-center">
+                            <label className="cursor-pointer p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all">
+                              <Upload className="w-6 h-6 text-white" />
+                              <input 
+                                type="file" 
+                                className="hidden" 
+                                accept=".jpg,.jpeg,.png"
+                                onChange={(e) => handleImageUpload(e, 'gallery', i, 'url')}
+                              />
+                            </label>
+                          </div>
                         </div>
+                      ) : (
+                        <label className="aspect-video rounded-lg border-2 border-dashed border-white/10 hover:border-amber-500/50 transition-all flex flex-col items-center justify-center cursor-pointer bg-white/5">
+                          {uploading === `gallery-${i}-url` ? (
+                            <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+                          ) : (
+                            <>
+                              <Upload className="w-8 h-8 text-zinc-500 mb-2" />
+                              <span className="text-xs text-zinc-500 font-bold uppercase">Upload Image (.jpg, .png)</span>
+                            </>
+                          )}
+                          <input 
+                            type="file" 
+                            className="hidden" 
+                            accept=".jpg,.jpeg,.png"
+                            onChange={(e) => handleImageUpload(e, 'gallery', i, 'url')}
+                          />
+                        </label>
                       )}
-                      <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={img.url}
-                        onChange={(e) => {
-                          const newGallery = [...localContent.gallery];
-                          newGallery[i].url = e.target.value;
-                          setLocalContent({ ...localContent, gallery: newGallery });
-                        }}
-                        className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm outline-none"
-                      />
                       <input
                         type="text"
                         placeholder="Caption"
@@ -372,6 +486,143 @@ const AdminDashboard = () => {
                   <div className="col-span-full p-20 border border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center bg-white/5">
                     <ImageIcon className="w-16 h-16 text-zinc-600 mb-4" />
                     <p className="text-sm text-zinc-500">No images in gallery. Add some using the button above.</p>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {activeTab === 'notices' && (
+            <section className="glass-card p-8">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-white">Notice Board Management</h3>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    const newNotices = [...(localContent.notices || []), { title: "", description: "", date: new Date().toLocaleDateString(), imageUrl: "", link: "" }];
+                    setLocalContent({ ...localContent, notices: newNotices });
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl text-sm font-bold transition-all"
+                >
+                  <Plus className="w-4 h-4" /> Add Notice
+                </motion.button>
+              </div>
+              <div className="space-y-6">
+                {(localContent.notices || []).map((notice: any, i: number) => (
+                  <div key={i} className="p-8 bg-white/5 rounded-2xl border border-white/5 relative group">
+                    <button
+                      onClick={() => {
+                        if (window.confirm('Are you sure you want to delete this notice?')) {
+                          const newNotices = localContent.notices.filter((_: any, idx: number) => idx !== i);
+                          setLocalContent({ ...localContent, notices: newNotices });
+                        }
+                      }}
+                      className="absolute top-4 right-4 p-2 text-zinc-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Notice Title</label>
+                          <input
+                            type="text"
+                            placeholder="Notice Title"
+                            value={notice.title}
+                            onChange={(e) => {
+                              const newNotices = [...localContent.notices];
+                              newNotices[i].title = e.target.value;
+                              setLocalContent({ ...localContent, notices: newNotices });
+                            }}
+                            className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Description</label>
+                          <textarea
+                            placeholder="Notice Description"
+                            value={notice.description}
+                            onChange={(e) => {
+                              const newNotices = [...localContent.notices];
+                              newNotices[i].description = e.target.value;
+                              setLocalContent({ ...localContent, notices: newNotices });
+                            }}
+                            className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm outline-none h-24"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Date</label>
+                            <input
+                              type="text"
+                              value={notice.date}
+                              onChange={(e) => {
+                                const newNotices = [...localContent.notices];
+                                newNotices[i].date = e.target.value;
+                                setLocalContent({ ...localContent, notices: newNotices });
+                              }}
+                              className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm outline-none"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">External Link (Optional)</label>
+                            <input
+                              type="text"
+                              placeholder="https://..."
+                              value={notice.link}
+                              onChange={(e) => {
+                                const newNotices = [...localContent.notices];
+                                newNotices[i].link = e.target.value;
+                                setLocalContent({ ...localContent, notices: newNotices });
+                              }}
+                              className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm outline-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="space-y-4">
+                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Notice Image (.jpg, .png)</label>
+                        {notice.imageUrl ? (
+                          <div className="aspect-video rounded-lg overflow-hidden bg-black/20 relative group/img">
+                            <img src={notice.imageUrl} alt="Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all flex items-center justify-center">
+                              <label className="cursor-pointer p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all">
+                                <Upload className="w-6 h-6 text-white" />
+                                <input 
+                                  type="file" 
+                                  className="hidden" 
+                                  accept=".jpg,.jpeg,.png"
+                                  onChange={(e) => handleImageUpload(e, 'notices', i, 'imageUrl')}
+                                />
+                              </label>
+                            </div>
+                          </div>
+                        ) : (
+                          <label className="aspect-video rounded-lg border-2 border-dashed border-white/10 hover:border-amber-500/50 transition-all flex flex-col items-center justify-center cursor-pointer bg-white/5">
+                            {uploading === `notices-${i}-imageUrl` ? (
+                              <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+                            ) : (
+                              <>
+                                <Upload className="w-8 h-8 text-zinc-500 mb-2" />
+                                <span className="text-xs text-zinc-500 font-bold uppercase">Upload Image</span>
+                              </>
+                            )}
+                            <input 
+                              type="file" 
+                              className="hidden" 
+                              accept=".jpg,.jpeg,.png"
+                              onChange={(e) => handleImageUpload(e, 'notices', i, 'imageUrl')}
+                            />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {(!localContent.notices || localContent.notices.length === 0) && (
+                  <div className="py-20 text-center border-2 border-dashed border-white/5 rounded-2xl">
+                    <Bell className="w-12 h-12 text-zinc-800 mx-auto mb-4" />
+                    <p className="text-zinc-500">No notices added yet.</p>
                   </div>
                 )}
               </div>
@@ -418,16 +669,12 @@ const AdminDashboard = () => {
                         }}
                         className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                       />
-                      <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={m.imageUrl}
-                        onChange={(e) => {
-                          const newMods = [...localContent.panel.moderators];
-                          newMods[i].imageUrl = e.target.value;
-                          updateField('panel', 'moderators', newMods);
-                        }}
-                        className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
+                      <ImageUploadField 
+                        section="panel" 
+                        index={i} 
+                        field="moderators" 
+                        nestedField="imageUrl" 
+                        value={m.imageUrl} 
                       />
                     </div>
                   ))}
@@ -464,16 +711,12 @@ const AdminDashboard = () => {
                           }}
                           className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                         />
-                        <input
-                          type="text"
-                          placeholder="Image URL"
-                          value={p.imageUrl}
-                          onChange={(e) => {
-                            const newExec = {...localContent.panel.executive};
-                            newExec.president[i].imageUrl = e.target.value;
-                            updateField('panel', 'executive', newExec);
-                          }}
-                          className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
+                        <ImageUploadField 
+                          section="panel" 
+                          index={i} 
+                          field="executive" 
+                          nestedField="imageUrl" 
+                          value={p.imageUrl} 
                         />
                       </div>
                     ))}
@@ -496,16 +739,12 @@ const AdminDashboard = () => {
                             }}
                             className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                           />
-                          <input
-                            type="text"
-                            placeholder="Image URL"
-                            value={p.imageUrl}
-                            onChange={(e) => {
-                              const newExec = {...localContent.panel.executive};
-                              newExec.deputyPresidents[i].imageUrl = e.target.value;
-                              updateField('panel', 'executive', newExec);
-                            }}
-                            className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
+                          <ImageUploadField 
+                            section="panel" 
+                            index={i} 
+                            field="executive" 
+                            nestedField="imageUrl" 
+                            value={p.imageUrl} 
                           />
                         </div>
                       ))}
@@ -529,16 +768,12 @@ const AdminDashboard = () => {
                             }}
                             className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                           />
-                          <input
-                            type="text"
-                            placeholder="Image URL"
-                            value={p.imageUrl}
-                            onChange={(e) => {
-                              const newExec = {...localContent.panel.executive};
-                              newExec.vicePresidents[i].imageUrl = e.target.value;
-                              updateField('panel', 'executive', newExec);
-                            }}
-                            className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
+                          <ImageUploadField 
+                            section="panel" 
+                            index={i} 
+                            field="executive" 
+                            nestedField="imageUrl" 
+                            value={p.imageUrl} 
                           />
                         </div>
                       ))}
@@ -585,16 +820,12 @@ const AdminDashboard = () => {
                         }}
                         className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                       />
-                      <input
-                        type="text"
-                        placeholder="Image URL"
-                        value={d.imageUrl}
-                        onChange={(e) => {
-                          const newDepts = [...localContent.panel.departments];
-                          newDepts[i].imageUrl = e.target.value;
-                          updateField('panel', 'departments', newDepts);
-                        }}
-                        className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
+                      <ImageUploadField 
+                        section="panel" 
+                        index={i} 
+                        field="departments" 
+                        nestedField="imageUrl" 
+                        value={d.imageUrl} 
                       />
                     </div>
                   ))}
@@ -622,16 +853,12 @@ const AdminDashboard = () => {
                               }}
                               className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                             />
-                            <input
-                              type="text"
-                              placeholder="Image URL"
-                              value={s.imageUrl}
-                              onChange={(e) => {
-                                const newSecs = {...localContent.panel.secretaries};
-                                newSecs[key][i].imageUrl = e.target.value;
-                                updateField('panel', 'secretaries', newSecs);
-                              }}
-                              className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
+                            <ImageUploadField 
+                              section="panel" 
+                              index={i} 
+                              field="secretaries" 
+                              nestedField="imageUrl" 
+                              value={s.imageUrl} 
                             />
                           </div>
                         ))}

@@ -71,7 +71,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           correspondingSecretary: Array(7).fill(null).map(() => ({ name: "Name Placeholder", imageUrl: "" }))
         }
       },
-      gallery: []
+      gallery: [],
+      notices: []
     };
 
     const fetchContent = async () => {
