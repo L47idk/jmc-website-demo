@@ -9,53 +9,51 @@ import Image from 'next/image';
 
 const Flashcard = ({ role, name, imageUrl, isBig = false, icon: Icon = User }: any) => (
   <motion.div
-    whileHover={{ y: -5, scale: 1.02 }}
-    className={`glass-card flex items-center gap-4 transition-all duration-300 ${
-      isBig ? 'p-8 border-amber-500/30' : 'p-4 border-white/5'
+    whileHover={{ y: -8, scale: 1.02 }}
+    className={`glass-card flex items-center gap-6 transition-all duration-500 ${
+      isBig ? 'p-10 border-amber-500/20' : 'p-6 border-white/5'
     }`}
   >
-    <div className={`rounded-full flex items-center justify-center bg-amber-500/10 text-amber-500 shrink-0 overflow-hidden relative ${
-      isBig ? 'w-16 h-16' : 'w-10 h-10'
+    <div className={`rounded-2xl flex items-center justify-center bg-amber-500/10 text-amber-500 shrink-0 overflow-hidden relative shadow-inner ${
+      isBig ? 'w-20 h-20' : 'w-14 h-14'
     }`}>
       {imageUrl ? (
         <Image 
           src={imageUrl} 
           alt={name} 
           fill 
-          className="object-cover"
+          className="object-cover transition-transform duration-500 hover:scale-110"
           referrerPolicy="no-referrer"
         />
       ) : (
-        <motion.div
-          animate={{ 
-            scale: [1, 1.1, 1],
-            opacity: [0.8, 1, 0.8]
-          }}
-          transition={{ 
-            duration: 3, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
-          }}
-        >
-          <Icon className={isBig ? 'w-8 h-8' : 'w-5 h-5'} />
-        </motion.div>
+        <Icon className={isBig ? 'w-10 h-10' : 'w-6 h-6'} />
       )}
     </div>
     <div className="min-w-0">
-      <p className={`font-bold text-white font-display truncate ${isBig ? 'text-xl' : 'text-sm'}`}>{role || name}</p>
-      {role && name && <p className="text-zinc-500 text-[10px] mt-1 uppercase tracking-widest truncate">{name}</p>}
-      {!role && name && <p className="text-zinc-500 text-[10px] mt-1 uppercase tracking-widest">Member</p>}
+      <p className={`font-bold text-white font-display tracking-tight truncate ${isBig ? 'text-2xl' : 'text-lg'}`}>{role || name}</p>
+      {role && name && <p className="text-amber-500/60 text-[10px] mt-1.5 uppercase tracking-[0.2em] font-bold truncate">{name}</p>}
+      {!role && name && <p className="text-zinc-500 text-[10px] mt-1.5 uppercase tracking-[0.2em] font-bold">Member</p>}
     </div>
   </motion.div>
 );
 
 const SectionHeading = ({ children, subtitle }: any) => (
-  <div className="mb-12 text-center">
-    <h2 className="text-3xl md:text-5xl font-bold text-white font-display tracking-tight mb-4 uppercase">
+  <div className="mb-16 text-center">
+    <motion.h2 
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="text-4xl md:text-7xl font-bold text-white font-display tracking-tighter mb-4 uppercase"
+    >
       {children}
-    </h2>
-    {subtitle && <p className="text-zinc-500 font-mono text-sm tracking-widest uppercase">{subtitle}</p>}
-    <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mt-6 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
+    </motion.h2>
+    {subtitle && <p className="text-zinc-500 font-light text-lg tracking-widest uppercase">{subtitle}</p>}
+    <motion.div 
+      initial={{ width: 0 }}
+      whileInView={{ width: 100 }}
+      viewport={{ once: true }}
+      className="h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-8 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]"
+    ></motion.div>
   </div>
 );
 

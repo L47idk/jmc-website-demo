@@ -44,7 +44,7 @@ const Contact = () => {
                 </motion.div>
                 <div>
                   <h3 className="text-lg font-bold text-white mb-1">Call Us</h3>
-                  <p className="text-zinc-400">phone-number</p>
+                  <p className="text-zinc-400">+1 (555) 000-0000</p>
                 </div>
               </div>
               <div className="flex items-start gap-6">
@@ -57,7 +57,7 @@ const Contact = () => {
                 </motion.div>
                 <div>
                   <h3 className="text-lg font-bold text-white mb-1">Visit Us</h3>
-                  <p className="text-zinc-400">St. Joseph Higher Secondary School <br></br>97, Asad Avenue, Mohammadpur, Dhaka-1207</p>
+                  <p className="text-zinc-400">St. Joseph's Campus, Math Wing, CA 90210</p>
                 </div>
               </div>
             </div>

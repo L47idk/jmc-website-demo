@@ -13,7 +13,7 @@ import { Sigma } from 'lucide-react';
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-  name: z.string().optional(),
+  name: z.string().min(2, "Name is required for registration"),
 });
 
 const Auth = () => {
@@ -43,6 +43,13 @@ const Auth = () => {
         }
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        
+        // Update Firebase Auth profile
+        const { updateProfile } = await import('firebase/auth');
+        await updateProfile(userCredential.user, {
+          displayName: data.name
+        });
+
         await setDoc(doc(db, 'users', userCredential.user.uid), {
           name: data.name,
           email: data.email,
@@ -87,6 +94,7 @@ const Auth = () => {
                 className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
                 placeholder="John Doe"
               />
+              {errors.name && <p className="text-xs text-red-400 mt-2">{errors.name.message as string}</p>}
             </div>
           )}
           <div>

@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAW-fL3upSZMnGVBFCl_l62HUgxVaj2E7c",
-  authDomain: "josephite-math-club.firebaseapp.com",
-  projectId: "josephite-math-club",
-  storageBucket: "josephite-math-club.firebasestorage.app",
-  messagingSenderId: "104604999238",
-  appId: "1:104604999238:web:03c89af5182c25b706b447",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyA-placeholder-key",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "placeholder.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "placeholder-project",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "placeholder.appspot.com",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "123456789",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:123456789:web:abcdef",
 };
 
 // Initialize Firebase only if we have a valid-looking API key or in a way that doesn't crash

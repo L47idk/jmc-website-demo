@@ -28,8 +28,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         logoUrl: ""
       },
       home: {
-        heroTitle: "Unravel the Mysteries of Mathematics",
-        heroSubtitle: "Welcome to the Josephite Math Club. A sanctuary for logical minds and creative problem solvers.",
+        heroTitle: "Josephite Math Club",
+        heroSubtitle: "Where logic meets imagination.",
         features: [
           { title: "Advanced Calculus", description: "Master the language of change and motion." },
           { title: "Number Theory", description: "Explore the fundamental properties of integers." },

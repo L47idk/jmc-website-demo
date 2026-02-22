@@ -30,7 +30,7 @@ const Profile = () => {
 
             <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-10">
               <div>
-                <h1 className="text-4xl font-bold text-white font-display mb-2">{profile?.name || 'Josephite Member'}</h1>
+                <h1 className="text-4xl font-bold text-white font-display mb-2">{profile?.name || user.displayName || 'Josephite Member'}</h1>
                 <p className="text-zinc-400 flex items-center gap-2 text-lg">
                   <Mail className="w-5 h-5 text-amber-500" /> {user.email}
                 </p>

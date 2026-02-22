@@ -23,6 +23,10 @@ const StarField = () => {
       baseY: number;
       density: number;
       color: string;
+      angle: number;
+      velocity: number;
+      twinkleSpeed: number;
+      twinkleOpacity: number;
 
       constructor(x: number, y: number) {
         this.x = x;
@@ -31,19 +35,42 @@ const StarField = () => {
         this.baseX = this.x;
         this.baseY = this.y;
         this.density = (Math.random() * 30) + 1;
-        this.color = `rgba(245, 158, 11, ${Math.random() * 0.5 + 0.2})`; // Amber/Gold
+        this.angle = Math.random() * Math.PI * 2;
+        this.velocity = Math.random() * 0.2 + 0.05;
+        this.twinkleSpeed = Math.random() * 0.02 + 0.005;
+        this.twinkleOpacity = Math.random();
+        
+        const isGold = Math.random() > 0.7;
+        this.color = isGold ? '245, 158, 11' : '255, 255, 255';
       }
 
       draw() {
         if (!ctx) return;
-        ctx.fillStyle = this.color;
+        this.twinkleOpacity += this.twinkleSpeed;
+        const opacity = (Math.sin(this.twinkleOpacity) + 1) / 2 * 0.6 + 0.1;
+        
+        ctx.save();
+        ctx.shadowBlur = this.size * 5;
+        ctx.shadowColor = `rgba(${this.color}, ${opacity})`;
+        ctx.fillStyle = `rgba(${this.color}, ${opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();
+        ctx.restore();
       }
 
-      update() {
+      update(width: number, height: number) {
+        // Subtle floating movement
+        this.baseX += Math.cos(this.angle) * this.velocity;
+        this.baseY += Math.sin(this.angle) * this.velocity;
+        
+        // Wrap around screen
+        if (this.baseX < 0) this.baseX = width;
+        if (this.baseX > width) this.baseX = 0;
+        if (this.baseY < 0) this.baseY = height;
+        if (this.baseY > height) this.baseY = 0;
+
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
@@ -60,11 +87,11 @@ const StarField = () => {
         } else {
           if (this.x !== this.baseX) {
             let dx = this.x - this.baseX;
-            this.x -= dx / 10;
+            this.x -= dx / 15;
           }
           if (this.y !== this.baseY) {
             let dy = this.y - this.baseY;
-            this.y -= dy / 10;
+            this.y -= dy / 15;
           }
         }
       }
@@ -99,7 +126,7 @@ const StarField = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
-        particles[i].update();
+        particles[i].update(canvas.width, canvas.height);
       }
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -116,7 +143,7 @@ const StarField = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none -z-20 bg-[#050505]"
+      className="fixed inset-0 pointer-events-none -z-20"
       style={{ filter: 'blur(0.5px)' }}
     />
   );

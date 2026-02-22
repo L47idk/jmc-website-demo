@@ -29,28 +29,28 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-20">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
               {logoUrl ? (
                 <img src={logoUrl} alt="Logo" className="h-10 w-10 object-contain" referrerPolicy="no-referrer" />
               ) : (
-                <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center text-black font-bold text-xl shadow-lg shadow-amber-500/20">
+                <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center text-black font-bold text-xl shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform duration-500">
                   J
                 </div>
               )}
-              <span className="text-xl font-bold tracking-tight text-white font-display group-hover:text-amber-400 transition-colors">{clubName}</span>
+              <span className="text-xl font-bold tracking-tight text-white font-display group-hover:text-amber-400 transition-colors duration-500">{clubName}</span>
             </Link>
           </div>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-10">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-sm font-medium transition-all hover:text-amber-400 ${
-                  pathname === link.path ? 'text-amber-400' : 'text-zinc-400'
+                className={`text-xs uppercase tracking-widest font-bold transition-all duration-500 hover:text-amber-400 ${
+                  pathname === link.path ? 'text-amber-400' : 'text-zinc-500'
                 }`}
               >
                 {link.name}

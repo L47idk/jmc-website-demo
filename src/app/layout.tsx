@@ -68,8 +68,16 @@ function AppContent({ children }: { children: React.ReactNode }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="min-h-screen flex flex-col relative"
+          className="min-h-screen flex flex-col relative overflow-hidden"
         >
+          {/* Atmospheric Background */}
+          <div className="fixed inset-0 pointer-events-none -z-30">
+            <div className="noise absolute inset-0 opacity-[0.02]" />
+            <div className="atmospheric-glow w-[600px] h-[600px] bg-amber-500/5 -top-48 -left-48" />
+            <div className="atmospheric-glow w-[500px] h-[500px] bg-indigo-500/5 bottom-0 -right-24" />
+            <div className="atmospheric-glow w-[400px] h-[400px] bg-emerald-500/3 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+
           <StarField />
           <BackgroundFormulas />
           <Navbar />

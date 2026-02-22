@@ -26,17 +26,22 @@ const Home = () => {
               Est. 2015 • Excellence in Mathematics
             </motion.div>
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-6xl md:text-8xl font-bold tracking-tighter text-white mb-8 font-display">
-              {home?.heroTitle}
+              transition={{ delay: 0.1, duration: 0.8, ease: "easeOut" }}
+              className="text-7xl md:text-9xl font-bold tracking-tighter text-white mb-8 font-display leading-[0.9]"
+            >
+              {home?.heroTitle?.split(' ').map((word: string, i: number) => (
+                <span key={i} className={i === home.heroTitle.split(' ').length - 1 ? "gold-text block md:inline" : "block md:inline mr-4"}>
+                  {word}
+                </span>
+              ))}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed"
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed font-light"
             >
               {home?.heroSubtitle}
             </motion.p>

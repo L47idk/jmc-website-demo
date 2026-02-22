@@ -26,22 +26,31 @@ const SplashScreen = ({ isLoaded, onFinish }: { isLoaded: boolean, onFinish: () 
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] bg-[#030303] flex flex-col items-center justify-center"
     >
-      <div className="w-64 space-y-6">
-        <div className="relative h-1 w-full bg-white/5 rounded-full overflow-hidden">
+      <div className="w-80 space-y-8">
+        <div className="flex justify-center mb-4">
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="h-16 w-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center text-black font-bold text-3xl shadow-2xl shadow-amber-500/20"
+          >
+            J
+          </motion.div>
+        </div>
+        <div className="relative h-[2px] w-full bg-white/[0.03] rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-amber-400 to-amber-600 shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+            className="absolute top-0 left-0 h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 shadow-[0_0_20px_rgba(245,158,11,0.5)]"
           />
         </div>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center text-amber-500/60 text-xs font-bold tracking-[0.3em] uppercase"
+          className="text-center text-amber-500/40 text-[10px] font-bold tracking-[0.5em] uppercase"
         >
-          Initializing Mathematical Sanctuary...
+          {progress < 100 ? "Initializing mathematical sanctuary..." : "Welcome to the Sanctuary"}
         </motion.p>
       </div>
     </motion.div>

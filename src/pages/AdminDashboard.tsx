@@ -121,7 +121,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, section: string, index?: number, field?: string, nestedField?: string) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, path: (string | number)[]) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
       return;
     }
 
-    const uploadId = `${section}-${index || 'main'}-${field || 'image'}${nestedField ? '-' + nestedField : ''}`;
+    const uploadId = path.join('-');
     setUploading(uploadId);
 
     try {
@@ -143,20 +143,20 @@ const AdminDashboard = () => {
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);
 
-      const newContent = { ...localContent };
-      if (index !== undefined && field) {
-        if (nestedField) {
-          newContent[section][field][index][nestedField] = url;
-        } else {
-          newContent[section][index][field] = url;
+      setLocalContent((prev: any) => {
+        const next = JSON.parse(JSON.stringify(prev));
+        let current = next;
+        for (let i = 0; i < path.length - 1; i++) {
+          const key = path[i];
+          if (!current[key]) {
+            current[key] = typeof path[i+1] === 'number' ? [] : {};
+          }
+          current = current[key];
         }
-      } else if (field) {
-        newContent[section][field] = url;
-      } else {
-        // Default case if needed
-      }
+        current[path[path.length - 1]] = url;
+        return next;
+      });
       
-      setLocalContent(newContent);
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Failed to upload image.");
@@ -166,14 +166,14 @@ const AdminDashboard = () => {
   };
 
   const updateField = (section: string, field: string, value: any) => {
-    setLocalContent({
-      ...localContent,
-      [section]: { ...localContent[section], [field]: value }
-    });
+    setLocalContent((prev: any) => ({
+      ...prev,
+      [section]: { ...prev[section], [field]: value }
+    }));
   };
 
-  const ImageUploadField = ({ section, index, field, nestedField, value, placeholder = "Image URL" }: { section: string, index?: number, field?: string, nestedField?: string, value: string, placeholder?: string }) => {
-    const uploadId = `${section}-${index || 'main'}-${field || 'image'}${nestedField ? '-' + nestedField : ''}`;
+  const ImageUploadField = ({ path, value, placeholder = "Image URL" }: { path: (string | number)[], value: string, placeholder?: string }) => {
+    const uploadId = path.join('-');
     const isUploading = uploading === uploadId;
 
     return (
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
               type="file" 
               className="hidden" 
               accept=".jpg,.jpeg,.png"
-              onChange={(e) => handleImageUpload(e, section, index, field, nestedField)}
+              onChange={(e) => handleImageUpload(e, path)}
             />
           </label>
         </div>
@@ -287,8 +287,7 @@ const AdminDashboard = () => {
                 <div>
                   <label className="block text-sm font-medium text-zinc-400 mb-2">Club Logo</label>
                   <ImageUploadField 
-                    section="site" 
-                    field="logoUrl" 
+                    path={['site', 'logoUrl']} 
                     value={localContent.site?.logoUrl || ''} 
                   />
                   <p className="text-xs text-zinc-500 mt-2 italic">Upload your club logo (.jpg or .png).</p>
@@ -445,7 +444,7 @@ const AdminDashboard = () => {
                                 type="file" 
                                 className="hidden" 
                                 accept=".jpg,.jpeg,.png"
-                                onChange={(e) => handleImageUpload(e, 'gallery', i, 'url')}
+                                onChange={(e) => handleImageUpload(e, ['gallery', i, 'url'])}
                               />
                             </label>
                           </div>
@@ -464,7 +463,7 @@ const AdminDashboard = () => {
                             type="file" 
                             className="hidden" 
                             accept=".jpg,.jpeg,.png"
-                            onChange={(e) => handleImageUpload(e, 'gallery', i, 'url')}
+                            onChange={(e) => handleImageUpload(e, ['gallery', i, 'url'])}
                           />
                         </label>
                       )}
@@ -592,7 +591,7 @@ const AdminDashboard = () => {
                                   type="file" 
                                   className="hidden" 
                                   accept=".jpg,.jpeg,.png"
-                                  onChange={(e) => handleImageUpload(e, 'notices', i, 'imageUrl')}
+                                  onChange={(e) => handleImageUpload(e, ['notices', i, 'imageUrl'])}
                                 />
                               </label>
                             </div>
@@ -611,7 +610,7 @@ const AdminDashboard = () => {
                               type="file" 
                               className="hidden" 
                               accept=".jpg,.jpeg,.png"
-                              onChange={(e) => handleImageUpload(e, 'notices', i, 'imageUrl')}
+                              onChange={(e) => handleImageUpload(e, ['notices', i, 'imageUrl'])}
                             />
                           </label>
                         )}
@@ -670,10 +669,7 @@ const AdminDashboard = () => {
                         className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                       />
                       <ImageUploadField 
-                        section="panel" 
-                        index={i} 
-                        field="moderators" 
-                        nestedField="imageUrl" 
+                        path={['panel', 'moderators', i, 'imageUrl']} 
                         value={m.imageUrl} 
                       />
                     </div>
@@ -712,10 +708,7 @@ const AdminDashboard = () => {
                           className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                         />
                         <ImageUploadField 
-                          section="panel" 
-                          index={i} 
-                          field="executive" 
-                          nestedField="imageUrl" 
+                          path={['panel', 'executive', 'president', i, 'imageUrl']} 
                           value={p.imageUrl} 
                         />
                       </div>
@@ -740,10 +733,7 @@ const AdminDashboard = () => {
                             className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                           />
                           <ImageUploadField 
-                            section="panel" 
-                            index={i} 
-                            field="executive" 
-                            nestedField="imageUrl" 
+                            path={['panel', 'executive', 'deputyPresidents', i, 'imageUrl']} 
                             value={p.imageUrl} 
                           />
                         </div>
@@ -769,10 +759,7 @@ const AdminDashboard = () => {
                             className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                           />
                           <ImageUploadField 
-                            section="panel" 
-                            index={i} 
-                            field="executive" 
-                            nestedField="imageUrl" 
+                            path={['panel', 'executive', 'vicePresidents', i, 'imageUrl']} 
                             value={p.imageUrl} 
                           />
                         </div>
@@ -821,10 +808,7 @@ const AdminDashboard = () => {
                         className="px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                       />
                       <ImageUploadField 
-                        section="panel" 
-                        index={i} 
-                        field="departments" 
-                        nestedField="imageUrl" 
+                        path={['panel', 'departments', i, 'imageUrl']} 
                         value={d.imageUrl} 
                       />
                     </div>
@@ -854,10 +838,7 @@ const AdminDashboard = () => {
                               className="w-full px-4 py-2 bg-black/20 border border-white/10 rounded-lg text-white text-sm"
                             />
                             <ImageUploadField 
-                              section="panel" 
-                              index={i} 
-                              field="secretaries" 
-                              nestedField="imageUrl" 
+                              path={['panel', 'secretaries', key, i, 'imageUrl']} 
                               value={s.imageUrl} 
                             />
                           </div>

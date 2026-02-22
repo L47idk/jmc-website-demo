@@ -8,45 +8,59 @@
 
 @layer base {
   body {
-    @apply bg-[#050505] text-zinc-100 antialiased selection:bg-amber-500/30 selection:text-amber-200;
+    @apply bg-[#050505] text-zinc-100 antialiased selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden;
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-white/[0.03] backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
   
   .glass-card {
-    @apply bg-black/40 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl;
+    @apply bg-zinc-900/40 backdrop-blur-xl border border-white/[0.08] rounded-3xl shadow-2xl relative overflow-hidden;
+  }
+
+  .glass-card::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none;
   }
 
   .glass-nav {
-    @apply bg-black/60 backdrop-blur-xl border-b border-white/5;
+    @apply bg-black/40 backdrop-blur-2xl border-b border-white/[0.05] shadow-lg;
   }
 
   .premium-border {
-    @apply border border-amber-500/20 hover:border-amber-500/40 transition-all;
+    @apply border border-white/10 hover:border-amber-500/30 transition-all duration-500;
   }
 
   .gold-text {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-500 to-amber-200;
+    @apply text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600;
+  }
+
+  .atmospheric-glow {
+    @apply absolute -z-10 blur-[120px] opacity-30 rounded-full;
   }
 }
 
 @layer utilities {
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mask-image: radial-gradient(circle at center, black, transparent);
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.2);
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(99, 102, 241, 0.5);
+    background: rgba(255, 255, 255, 0.2);
   }
 }
 
