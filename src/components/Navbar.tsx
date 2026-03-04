@@ -5,40 +5,56 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { useContent } from '../context/ContentContext';
 import { Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react';
-import { auth } from '../lib/firebase';
+import { supabase } from '../lib/supabase';
 import { motion, AnimatePresence } from 'motion/react';
 
 const Navbar = () => {
   const { user, isAdmin } = useAuth();
   const { content } = useContent();
   const [isOpen, setIsOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Gallery', path: '/gallery' },
     { name: 'Notice Board', path: '/notices' },
-    { name: 'Contact', path: '/contact' },
     { name: 'Panel', path: '/panel' },
   ];
 
   const logoUrl = content?.site?.logoUrl;
   const clubName = content?.site?.clubName || 'Josephite Math';
 
+  const isAdminPage = pathname?.startsWith('/admin');
+
   return (
-    <nav className="sticky top-0 z-50 glass-nav">
+    <nav 
+      className={`${isAdminPage ? 'relative bg-[#080808] border-b border-white/5' : 'fixed top-0 left-0 w-full z-50'} transition-all duration-500 ${
+        !isAdminPage && scrolled 
+          ? 'glass-nav py-3 border-b border-white/10 shadow-2xl' 
+          : !isAdminPage ? 'bg-transparent py-6 border-b border-transparent' : 'py-4'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20">
+        <div className={`flex justify-between transition-all duration-500 ${scrolled ? 'h-16' : 'h-24'}`}>
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
-              {logoUrl ? (
-                <img src={logoUrl} alt="Logo" className="h-10 w-10 object-contain" referrerPolicy="no-referrer" />
-              ) : (
-                <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center text-black font-bold text-xl shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform duration-500">
-                  J
-                </div>
-              )}
+              <div className="h-10 w-28 relative group-hover:scale-105 transition-transform duration-500">
+                <img 
+                  src={logoUrl || "/images/logo.png"} 
+                  alt="JMC Logo" 
+                  className="h-full w-full object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
               <span className="text-xl font-bold tracking-tight text-white font-display group-hover:text-amber-400 transition-colors duration-500">{clubName}</span>
             </Link>
           </div>
@@ -74,7 +90,7 @@ const Navbar = () => {
                 </motion.div>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => auth.signOut()}
+                  onClick={() => supabase.auth.signOut()}
                   className="text-zinc-400 hover:text-red-400 transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
@@ -146,7 +162,7 @@ const Navbar = () => {
                   </Link>
                   <button
                     onClick={() => {
-                      auth.signOut();
+                      supabase.auth.signOut();
                       setIsOpen(false);
                     }}
                     className="block w-full text-left px-3 py-3 rounded-xl text-base font-medium text-red-400 hover:bg-white/5"

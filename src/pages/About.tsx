@@ -1,14 +1,43 @@
 "use client";
 import React from 'react';
+import { useContent } from '../context/ContentContext';
 import { motion } from 'motion/react';
 import { Calculator, Trophy, Lightbulb, Heart } from 'lucide-react';
 
+const Typewriter = ({ text, delay = 20 }: { text: string; delay?: number }) => {
+  const [currentText, setCurrentText] = React.useState("");
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setCurrentText((prevText) => prevText + text[currentIndex]);
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+      }, delay);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, delay, text]);
+
+  return <span>{currentText}</span>;
+};
+
 const About = () => {
+  const { content, loading } = useContent();
+
+  if (loading) return null;
+
+  const aboutContent = content.about || {
+    title: "What is JMC?",
+    description: "The Josephite Math Club is dedicated to cultivating a passion for mathematics. Our mission is to provide a supportive environment for students to explore mathematical concepts, participate in competitions, and engage in math-related events. Join us to experience the world of mathematics in a whole new way!",
+    mission: ""
+  };
+
   const stats = [
-    { number: "7", label: "BDMO venue coordinator" },
-    { number: "100+", label: "Workshops on various topics" },
-    { number: "6", label: "Inter School Math Festivals" },
-    { number: "20k+", label: "People impacted" },
+    { number: "10+", label: "Years of Excellence" },
+    { number: "100+", label: "Workshops Conducted" },
+    { number: "6", label: "National Festivals" },
+    { number: "20k+", label: "Students Impacted" },
   ];
 
   const objectives = [
@@ -40,42 +69,24 @@ const About = () => {
 
   return (
     <div className="min-h-screen relative py-24 overflow-hidden">
-      {/* Background Mathematical Graphic */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl aspect-square pointer-events-none opacity-10 z-0">
-        <div className="absolute inset-0 border border-amber-500/30 rounded-full animate-[spin_60s_linear_infinite]" />
-        <div className="absolute inset-12 border border-amber-500/20 rounded-full animate-[spin_40s_linear_infinite_reverse]" />
-        <div className="absolute inset-24 border border-amber-500/10 rounded-full animate-[spin_30s_linear_infinite]" />
-        
-        {/* Mathematical Symbols scattered */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-4xl text-amber-500 font-serif">α</div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-4xl text-amber-500 font-serif">β</div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-4xl text-amber-500 font-serif">Σ</div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-4xl text-amber-500 font-serif">π</div>
-        <div className="absolute top-1/4 left-1/4 text-3xl text-amber-500 font-serif">∫</div>
-        <div className="absolute bottom-1/4 right-1/4 text-3xl text-amber-500 font-serif">√</div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* What is JMC Section */}
         <section className="text-center mb-32">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-4xl md:text-6xl font-bold text-white mb-12 font-display tracking-widest uppercase"
           >
-            What is <span className="gold-text">JMC?</span>
+            {aboutContent.title.split(' ').map((word: string, i: number) => (
+              <span key={i} className={i === 2 ? "gold-text mr-4" : "mr-4"}>{word}</span>
+            ))}
           </motion.h2>
           
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-zinc-400 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed mb-16 font-light"
-          >
-            The Josephite Math Club is dedicated to cultivating a passion for mathematics. Our mission is to provide a supportive environment for students to explore mathematical concepts, participate in competitions, and engage in math-related events. Join us to experience the world of mathematics in a whole new way!
-          </motion.p>
+          <div className="text-zinc-400 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed mb-16 font-light min-h-[120px]">
+            <Typewriter text={aboutContent.description} />
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, i) => (
@@ -85,7 +96,7 @@ const About = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="glass-card p-8 flex flex-col items-center justify-center border-white/5 hover:border-amber-500/30 transition-all group"
+                className="glass-card p-8 flex flex-col items-center justify-center glowing-border transition-all group"
               >
                 <span className="text-5xl font-bold text-white mb-4 font-display group-hover:scale-110 transition-transform duration-500">
                   {stat.number}
@@ -117,22 +128,24 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="glass-card p-10 flex flex-col items-center text-center border-white/5 hover:bg-white/5 transition-all group relative overflow-hidden"
+                className="moving-border-container"
               >
-                {/* Top accent line */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                
-                <div className={`mb-8 p-4 rounded-2xl bg-white/5 ${obj.color} group-hover:scale-110 transition-transform duration-500`}>
-                  {obj.icon}
+                <div className="moving-border-content p-10 flex flex-col items-center text-center group relative overflow-hidden">
+                  {/* Top accent line */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  <div className={`mb-8 p-4 rounded-2xl bg-white/5 ${obj.color} group-hover:scale-110 transition-transform duration-500`}>
+                    {obj.icon}
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-6 font-display border-b border-white/10 pb-4 w-full">
+                    {obj.title}
+                  </h3>
+                  
+                  <p className="text-zinc-400 text-sm leading-relaxed font-light">
+                    {obj.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-2xl font-bold text-white mb-6 font-display border-b border-white/10 pb-4 w-full">
-                  {obj.title}
-                </h3>
-                
-                <p className="text-zinc-400 text-sm leading-relaxed font-light">
-                  {obj.description}
-                </p>
               </motion.div>
             ))}
           </div>

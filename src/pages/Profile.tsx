@@ -11,7 +11,7 @@ const Profile = () => {
   if (!user) return <div className="min-h-screen flex items-center justify-center text-zinc-400">Please login to view profile.</div>;
 
   return (
-    <div className="min-h-screen relative py-20">
+    <div className="min-h-screen relative py-32">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ const Profile = () => {
 
             <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-10">
               <div>
-                <h1 className="text-4xl font-bold text-white font-display mb-2">{profile?.name || user.displayName || 'Josephite Member'}</h1>
+                <h1 className="text-4xl font-bold text-white font-display mb-2">{profile?.name || user.user_metadata?.full_name || 'Josephite Member'}</h1>
                 <p className="text-zinc-400 flex items-center gap-2 text-lg">
                   <Mail className="w-5 h-5 text-amber-500" /> {user.email}
                 </p>
@@ -56,7 +56,7 @@ const Profile = () => {
                   <span className="text-sm font-bold uppercase tracking-widest">Joined Date</span>
                 </div>
                 <p className="text-white text-xl font-bold font-display">
-                  {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' }) : 'N/A'}
+                  {profile?.created_at ? new Date(profile.created_at).toLocaleDateString(undefined, { dateStyle: 'long' }) : 'N/A'}
                 </p>
               </div>
             </div>

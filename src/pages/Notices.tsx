@@ -2,7 +2,7 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
 import { motion } from 'motion/react';
-import { Calendar, Bell, ExternalLink } from 'lucide-react';
+import { Calendar, Bell, ExternalLink, FileText } from 'lucide-react';
 
 const Notices = () => {
   const { content } = useContent();
@@ -52,12 +52,19 @@ const Notices = () => {
               >
                 {notice.imageUrl && (
                   <div className="aspect-[16/10] overflow-hidden relative">
-                    <img
-                      src={notice.imageUrl}
-                      alt={notice.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                      referrerPolicy="no-referrer"
-                    />
+                    {notice.imageUrl.toLowerCase().endsWith('.pdf') ? (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-900/50 group-hover:bg-zinc-900/80 transition-colors duration-500">
+                        <FileText className="w-16 h-16 text-amber-500 mb-4 group-hover:scale-110 transition-transform duration-500" />
+                        <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">PDF Document</span>
+                      </div>
+                    ) : (
+                      <img
+                        src={notice.imageUrl}
+                        alt={notice.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   </div>
                 )}
@@ -72,14 +79,15 @@ const Notices = () => {
                   <p className="text-zinc-400 text-sm leading-relaxed mb-8 flex-grow font-light">
                     {notice.description}
                   </p>
-                  {notice.link && (
+                  {(notice.link || (notice.imageUrl && notice.imageUrl.toLowerCase().endsWith('.pdf'))) && (
                     <a
-                      href={notice.link}
+                      href={notice.link || notice.imageUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-bold text-xs uppercase tracking-widest transition-all duration-500 mt-auto group/link"
                     >
-                      Learn More <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                      {notice.imageUrl?.toLowerCase().endsWith('.pdf') ? 'View PDF' : 'Learn More'} 
+                      <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                     </a>
                   )}
                 </div>

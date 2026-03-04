@@ -1,0 +1,953 @@
+{
+  "site": {
+    "clubName": "Josephite Math Club",
+    "logoUrl": "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616470781-jmc.png"
+  },
+  "home": {
+    "heroTitle": "Josephite Math Club",
+    "heroSubtitle": "Where logic meets imagination.",
+    "testimonialsTitle": "People About JMC",
+    "testimonials": [
+      {
+        "name": "Anthony Prince Costa",
+        "role": "Chief Moderator",
+        "message": "As Chief Moderator, I take pride in guiding the Math Club, which reflects the spirit of our department. Our mission is to create a community where mathematics is not just about formulas but about critical thinking, curiosity, and teamwork. This club allows students to go beyond textbooks and experience the true beauty of numbers and logic.",
+        "imageUrl": "",
+        "id": "root-home-testimonials-0-j5tehjir4"
+      },
+      {
+        "name": "Intesher Alam Manam",
+        "role": "Club President",
+        "message": "As the President of the Math Club, I feel honored to lead such a vibrant community. My vision is to make this club a hub for discovery, learning, and collaboration. Whether it's competitions, workshops, or friendly discussions, we want every member to feel inspired and motivated to see math not as pressure, but as passion.",
+        "imageUrl": "",
+        "id": "root-home-testimonials-1-er0ttx1ep"
+      },
+      {
+        "name": "Shoumik Saha Raj",
+        "role": "General Secretary",
+        "message": "As General Secretary, my role is to keep our Math Club organized, active, and welcoming for everyone. I work to ensure smooth coordination of events, competitions, and activities so that each member has the chance to participate and grow. Together, we are creating a community where learning mathematics is not only meaningful but also enjoyable.",
+        "imageUrl": "",
+        "id": "root-home-testimonials-2-j621yhizn"
+      },
+      {
+        "name": "Monwar Rafat",
+        "role": "Deputy President",
+        "message": "Serving as Deputy President, I work alongside our president and members to ensure that the Math Club continues to grow with new initiatives. We aim to make mathematics a source of joy, exploration, and innovation for every student, giving them opportunities to learn and lead with confidence.",
+        "imageUrl": "",
+        "id": "root-home-testimonials-3-gd5aotk2o"
+      },
+      {
+        "name": "Arefin Anwar",
+        "role": "Vice President",
+        "message": "As Vice President, I believe the true strength of our Math Club lies in teamwork and inclusiveness. We are building a community where students not only sharpen their problem-solving skills but also learn to innovate, collaborate, and enjoy mathematics as a lifelong journey of discovery.",
+        "imageUrl": "",
+        "id": "root-home-testimonials-4-2xng7rc2p"
+      }
+    ]
+  },
+  "about": {
+    "title": "What is JMC?",
+    "description": "The Josephite Math Club is dedicated to cultivating a passion for mathematics. Our mission is to provide a supportive environment for students to explore mathematical concepts, participate in competitions, and engage in math-related events. Join us to experience the world of mathematics in a whole new way!",
+    "mission": ""
+  },
+  "panel": {
+    "moderators": [
+      {
+        "role": "Chief Moderator",
+        "name": "",
+        "imageUrl": "",
+        "id": "root-panel-moderators-0-dfc4k23hf"
+      },
+      {
+        "role": "Moderator",
+        "name": "",
+        "imageUrl": "",
+        "id": "root-panel-moderators-1-209b2rqxo"
+      },
+      {
+        "role": "Moderator",
+        "name": "",
+        "imageUrl": "",
+        "id": "root-panel-moderators-2-4litfrluq"
+      },
+      {
+        "role": "Moderator",
+        "name": "",
+        "imageUrl": "",
+        "id": "root-panel-moderators-3-uq539p2y1"
+      }
+    ],
+    "executive": {
+      "current": {
+        "president": [
+          {
+            "role": "President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-president-0-bftg3lph8"
+          }
+        ],
+        "deputyPresidents": [
+          {
+            "role": "Deputy President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-deputyPresidents-0-jlrznl869"
+          },
+          {
+            "role": "Deputy President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-deputyPresidents-1-ajkkccs7m"
+          }
+        ],
+        "generalSecretary": [
+          {
+            "role": "General Secretary",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-generalSecretary-0-qrtly2v8v"
+          }
+        ],
+        "vicePresidents": [
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-0-43rgkkstc"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-1-u8sastbr7"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-2-3a5zwf0pg"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-3-zdv6oyiq2"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-4-meectr1sm"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-5-121ca00xz"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-6-s45vzde36"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-7-q1e1ay76z"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-8-jg4qskgcj"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-vicePresidents-9-564war86d"
+          }
+        ],
+        "departments": [
+          {
+            "dept": "Internal Affairs",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-0-jvokd06j7"
+          },
+          {
+            "dept": "External Affairs",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-1-wmxu3e39i"
+          },
+          {
+            "dept": "Photography",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-2-lqeyvngpi"
+          },
+          {
+            "dept": "Events",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-3-moogq90ym"
+          },
+          {
+            "dept": "Writings",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-4-dobiwqibp"
+          },
+          {
+            "dept": "Equity",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-5-7w4fpdsmr"
+          },
+          {
+            "dept": "Decoration",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-current-departments-6-4fpn403eq"
+          }
+        ],
+        "secretaries": {
+          "asstGeneralSecretary": [
+            {
+              "name": "Kazi Nafisul Bashar",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-0-sq4u09xq4"
+            },
+            {
+              "name": "Tahmid Muhsin Taqi",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-1-tieiqvt74"
+            },
+            {
+              "name": "Tawsif Hamid Abir",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-2-a3ncmjdx4"
+            },
+            {
+              "name": "Shougoto Saha",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-3-8yp1fbupj"
+            },
+            {
+              "name": "Mahdi Rasif",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-4-3ft4g7guq"
+            },
+            {
+              "name": "Arefin Alam Tanjim",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-5-rbmwl6ip8"
+            },
+            {
+              "name": "Tauhidur Rahman",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-6-v9kvhu65r"
+            },
+            {
+              "name": "Zulkarnain Zaman Aarosh",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-7-eklyc0izd"
+            },
+            {
+              "name": "Sindid Alam",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-8-4kwtz5fw5"
+            },
+            {
+              "name": "Muhtadee Tausif Hasan Adib",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-9-xcadfey1o"
+            },
+            {
+              "name": "MD Jarif Bin Hossain",
+              "id": "root-panel-executive-current-secretaries-asstGeneralSecretary-10-ajdx2dllj"
+            }
+          ],
+          "jointSecretary": [
+            {
+              "name": "Swapnil Podder",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-0-5pd2hw7a5"
+            },
+            {
+              "name": "Ragib Ash Add",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-1-9e1nwqo5s"
+            },
+            {
+              "name": "Md. Nazmus Sakib",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-2-cbapbn67u"
+            },
+            {
+              "name": "Ajmol Fahim",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-3-6ypwigcrv"
+            },
+            {
+              "name": "Probaho Kul Sanchalon Minhaz",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-4-srctcbvet"
+            },
+            {
+              "name": "Shuvashish Saha",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-5-dmyikl2o2"
+            },
+            {
+              "name": "S M Abir",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-6-4xlqbj5m2"
+            },
+            {
+              "name": "Tasdid Alam Ratul",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-7-qk4vlya2g"
+            },
+            {
+              "name": "Raiyan Nafir Rhythm",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-8-yf0mzot7i"
+            },
+            {
+              "name": "Sameer Saihan",
+              "id": "root-panel-executive-current-secretaries-jointSecretary-9-ujukle49m"
+            }
+          ],
+          "organizingSecretary": [
+            {
+              "name": "Shuvro",
+              "id": "root-panel-executive-current-secretaries-organizingSecretary-0-zfnitqitn"
+            },
+            {
+              "name": "Riyad Miah",
+              "id": "root-panel-executive-current-secretaries-organizingSecretary-1-y4g7tn9hc"
+            },
+            {
+              "name": "Krrish",
+              "id": "root-panel-executive-current-secretaries-organizingSecretary-2-kl6vqowhw"
+            },
+            {
+              "name": "Sadman",
+              "id": "root-panel-executive-current-secretaries-organizingSecretary-3-2w5kxqoww"
+            },
+            {
+              "name": "Walid Pathan",
+              "id": "root-panel-executive-current-secretaries-organizingSecretary-4-mvgk3pptf"
+            },
+            {
+              "name": "Shirsendu Das",
+              "id": "root-panel-executive-current-secretaries-organizingSecretary-5-wfuuyb22k"
+            }
+          ],
+          "correspondingSecretary": [
+            {
+              "name": "Farhan",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-0-5m9ojg8tp"
+            },
+            {
+              "name": "Mashnoon",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-1-lez9fk4x9"
+            },
+            {
+              "name": "Oliver",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-2-uc41938wx"
+            },
+            {
+              "name": "Shuvro Aninda Bepari",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-3-sdk9yaw7q"
+            },
+            {
+              "name": "Saraf Islam Nuhil",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-4-ie0f7c3j0"
+            },
+            {
+              "name": "Tahmid",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-5-sp0jhqsm0"
+            },
+            {
+              "name": "Al Wasif",
+              "id": "root-panel-executive-current-secretaries-correspondingSecretary-6-5fsrab08d"
+            }
+          ]
+        }
+      },
+      "recent": {
+        "president": [
+          {
+            "role": "President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-president-0-zpdlhoo5x"
+          }
+        ],
+        "deputyPresidents": [
+          {
+            "role": "Deputy President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-deputyPresidents-0-un29kwc62"
+          },
+          {
+            "role": "Deputy President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-deputyPresidents-1-fjwypazce"
+          }
+        ],
+        "generalSecretary": [
+          {
+            "role": "General Secretary",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-generalSecretary-0-5vb375vtw"
+          }
+        ],
+        "vicePresidents": [
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-0-hxfi36fjk"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-1-55u5xmfl5"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-2-cm97stvkj"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-3-rpbkr95ce"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-4-dondx25aa"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-5-dwbvauedg"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-6-a0qh5fofw"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-7-2stmm9hgd"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-8-aszv850mu"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-vicePresidents-9-nfmfxyida"
+          }
+        ],
+        "departments": [
+          {
+            "dept": "Internal Affairs",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-0-jkt7iocag"
+          },
+          {
+            "dept": "External Affairs",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-1-79gllwxx8"
+          },
+          {
+            "dept": "Photography",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-2-6aftb3s3w"
+          },
+          {
+            "dept": "Events",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-3-jxm3gyo54"
+          },
+          {
+            "dept": "Writings",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-4-2vdvgnt4p"
+          },
+          {
+            "dept": "Equity",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-5-olh6dbuc4"
+          },
+          {
+            "dept": "Decoration",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-recent-departments-6-d2unmyto6"
+          }
+        ],
+        "secretaries": {
+          "asstGeneralSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-0-og93d3bw4"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-1-qlby7xf64"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-2-hor0n3jmm"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-3-gft405kzm"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-4-rztcb9m97"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-5-az18txwc7"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-6-xiz0chf4s"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-7-qzqz9avkm"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-8-tgt9iqfm4"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-9-s04exm6tx"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-asstGeneralSecretary-10-2qd2zgpd7"
+            }
+          ],
+          "jointSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-0-pjd7xwcxl"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-1-ay8113sj3"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-2-fhfkj5z25"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-3-k7mhxaipq"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-4-epbfmiyg6"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-5-0k1m2u41f"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-6-7p4ajo1w0"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-7-57zdzquit"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-8-n7itg746v"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-jointSecretary-9-x8dbni5p7"
+            }
+          ],
+          "organizingSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-organizingSecretary-0-fb59u0skk"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-organizingSecretary-1-qc6fzfzpp"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-organizingSecretary-2-x1fkobbll"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-organizingSecretary-3-vy35gduwc"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-organizingSecretary-4-xgvcrsxun"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-organizingSecretary-5-bnegiu1x1"
+            }
+          ],
+          "correspondingSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-0-og4sqawvx"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-1-qcn5iflm8"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-2-y39pppa1c"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-3-et5xkfctf"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-4-kvgl1k8b7"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-5-fxlxdc1g3"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-recent-secretaries-correspondingSecretary-6-uy3vyuif7"
+            }
+          ]
+        }
+      },
+      "former": {
+        "president": [
+          {
+            "role": "President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-president-0-iwgb9rs33"
+          }
+        ],
+        "deputyPresidents": [
+          {
+            "role": "Deputy President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-deputyPresidents-0-jva2wvk8m"
+          },
+          {
+            "role": "Deputy President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-deputyPresidents-1-pcvrc2ol3"
+          }
+        ],
+        "generalSecretary": [
+          {
+            "role": "General Secretary",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-generalSecretary-0-hxr2ywm28"
+          }
+        ],
+        "vicePresidents": [
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-0-165k65srs"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-1-yytjrl0aa"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-2-sj69w86zx"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-3-g6r7ojt67"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-4-l5oaecons"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-5-otys7b1n5"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-6-ax86obdlf"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-7-ylmq6lpna"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-8-6n8dt5i7m"
+          },
+          {
+            "role": "Vice President",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-vicePresidents-9-67m0uneg8"
+          }
+        ],
+        "departments": [
+          {
+            "dept": "Internal Affairs",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-0-416nn8vgq"
+          },
+          {
+            "dept": "External Affairs",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-1-enab0o2hg"
+          },
+          {
+            "dept": "Photography",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-2-86lzwi2an"
+          },
+          {
+            "dept": "Events",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-3-julbbasc8"
+          },
+          {
+            "dept": "Writings",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-4-97wpcp1su"
+          },
+          {
+            "dept": "Equity",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-5-aa6v80rc6"
+          },
+          {
+            "dept": "Decoration",
+            "name": "",
+            "imageUrl": "",
+            "id": "root-panel-executive-former-departments-6-q9jpo8bdt"
+          }
+        ],
+        "secretaries": {
+          "asstGeneralSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-0-95990v1ej"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-1-16ogkqn20"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-2-068ldj38z"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-3-pk85gv3cq"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-4-obhvk1v3u"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-5-26y3m7szp"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-6-5v5cjt980"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-7-gpq9mmlts"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-8-oot5dx3mq"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-9-ykqjpawot"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-asstGeneralSecretary-10-9irhg3syw"
+            }
+          ],
+          "jointSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-0-4zbqn4ohq"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-1-db1qabwd4"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-2-ptwxfvb8a"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-3-t2kl18zu2"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-4-0bdj4hjrf"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-5-lmg4qv7re"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-6-kr8oo4q18"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-7-rq0j6sj6k"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-8-oud83o30o"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-jointSecretary-9-kyd8utzgt"
+            }
+          ],
+          "organizingSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-organizingSecretary-0-5y132e1f8"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-organizingSecretary-1-hci307ri4"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-organizingSecretary-2-x6u9hadsy"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-organizingSecretary-3-dtljcf39s"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-organizingSecretary-4-52wxayrao"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-organizingSecretary-5-af6zfw5r5"
+            }
+          ],
+          "correspondingSecretary": [
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-0-md1wk21rb"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-1-0ji29v66b"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-2-mu74a1b64"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-3-5zsepepyn"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-4-c1uenwirk"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-5-6hwp699w0"
+            },
+            {
+              "name": "",
+              "id": "root-panel-executive-former-secretaries-correspondingSecretary-6-cvr9ig0t9"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "gallery": [
+    "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616938268-five.jpg",
+    "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616941689-four.jpg",
+    "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616947636-one.jpg",
+    "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616952221-six.jpg",
+    "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616957813-three.jpg",
+    "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616961207-two.jpg"
+  ],
+  "notices": [
+    {
+      "id": "notice-1772615072128-7565bb9hx",
+      "title": "fds",
+      "description": "afsadf",
+      "date": "2026-03-04",
+      "imageUrl": "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772615075793-3.pdf",
+      "link": ""
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
-const SplashScreen = ({ isLoaded, onFinish }: { isLoaded: boolean, onFinish: () => void }) => {
+const SplashScreen = ({ isLoaded, logoUrl, onFinish }: { isLoaded: boolean, logoUrl?: string, onFinish: () => void }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -33,16 +33,20 @@ const SplashScreen = ({ isLoaded, onFinish }: { isLoaded: boolean, onFinish: () 
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="h-16 w-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center text-black font-bold text-3xl shadow-2xl shadow-amber-500/20"
+            className="h-16 w-48 relative"
           >
-            J
+            <img 
+              src={logoUrl || "/images/logo.png"} 
+              alt="JMC Logo" 
+              className="h-full w-full object-contain"
+            />
           </motion.div>
         </div>
-        <div className="relative h-[2px] w-full bg-white/[0.03] rounded-full overflow-hidden">
+        <div className="relative h-2.5 w-full bg-white/[0.08] rounded-full p-[2px] border border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 shadow-[0_0_20px_rgba(245,158,11,0.5)]"
+            className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]"
           />
         </div>
         <motion.p

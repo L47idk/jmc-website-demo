@@ -1,8 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../lib/firebase';
+import { User } from '@supabase/supabase-js';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface AuthContextType {
   user: User | null;
@@ -25,49 +24,67 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
-      const FIRST_ADMIN_UID = "uZSUS5dCcfZfQoKGju4ZcSlTqZA2";
-      
-      if (user) {
-        // Set isAdmin immediately for the first admin to avoid UI delay
-        if (user.uid === FIRST_ADMIN_UID) {
-          setIsAdmin(true);
-        }
-
-        try {
-          const docRef = doc(db, 'users', user.uid);
-          const docSnap = await getDoc(docRef);
-          
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            setProfile(data);
-            setIsAdmin(data.role === 'admin' || user.uid === FIRST_ADMIN_UID);
-          } else if (user.uid === FIRST_ADMIN_UID) {
-            setProfile({ role: 'admin', email: user.email });
-          } else {
-            setProfile(null);
-            setIsAdmin(false);
-          }
-        } catch (err) {
-          console.error("Auth profile fetch error:", err);
-          if (user.uid === FIRST_ADMIN_UID) {
-            setIsAdmin(true);
-            setProfile({ role: 'admin', email: user.email });
-          } else {
-            setProfile(null);
-            setIsAdmin(false);
-          }
-        }
-      } else {
-        setProfile(null);
-        setIsAdmin(false);
-      }
+    if (!isSupabaseConfigured) {
       setLoading(false);
+      return;
+    }
+
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      handleAuthChange(session?.user ?? null);
     });
 
-    return unsubscribe;
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      handleAuthChange(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
+
+  const handleAuthChange = async (user: User | null) => {
+    setUser(user);
+    const FIRST_ADMIN_EMAIL = "l47idkpro@gmail.com"; // Example admin email for Supabase transition
+    
+    if (user) {
+      // Set isAdmin immediately based on email if needed, or wait for profile
+      if (user.email === FIRST_ADMIN_EMAIL) {
+        setIsAdmin(true);
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle(); // Use maybeSingle to avoid error if trigger is slightly delayed
+        
+        if (data && !error) {
+          setProfile(data);
+          setIsAdmin(data.role === 'admin' || user.email === FIRST_ADMIN_EMAIL);
+        } else {
+          // Fallback if profile doesn't exist yet (trigger delay)
+          setProfile({ email: user.email, role: user.email === FIRST_ADMIN_EMAIL ? 'admin' : 'member' });
+          setIsAdmin(user.email === FIRST_ADMIN_EMAIL);
+        }
+      } catch (err) {
+        console.error("Auth profile fetch error:", err);
+        if (user.email === FIRST_ADMIN_EMAIL) {
+          setIsAdmin(true);
+          setProfile({ role: 'admin', email: user.email });
+        } else {
+          setProfile(null);
+          setIsAdmin(false);
+        }
+      }
+    } else {
+      setProfile(null);
+      setIsAdmin(false);
+    }
+    setLoading(false);
+  };
 
   return (
     <AuthContext.Provider value={{ user, loading, isAdmin, profile }}>
