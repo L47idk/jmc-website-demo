@@ -650,7 +650,7 @@
         "president": [
           {
             "role": "President",
-            "name": "",
+            "name": "Ziyad Mohammad",
             "imageUrl": "",
             "id": "root-panel-executive-former-president-0-iwgb9rs33"
           }
@@ -658,13 +658,13 @@
         "deputyPresidents": [
           {
             "role": "Deputy President",
-            "name": "",
+            "name": "Rafiu Mohammad Mosharrof",
             "imageUrl": "",
             "id": "root-panel-executive-former-deputyPresidents-0-jva2wvk8m"
           },
           {
             "role": "Deputy President",
-            "name": "",
+            "name": "Shawon Rahman",
             "imageUrl": "",
             "id": "root-panel-executive-former-deputyPresidents-1-pcvrc2ol3"
           }
@@ -672,7 +672,7 @@
         "generalSecretary": [
           {
             "role": "General Secretary",
-            "name": "",
+            "name": "Tahsin Ahnaf Mahir",
             "imageUrl": "",
             "id": "root-panel-executive-former-generalSecretary-0-hxr2ywm28"
           }
@@ -680,61 +680,61 @@
         "vicePresidents": [
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Al Sahad",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-0-165k65srs"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Arafat Karim Rahat",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-1-yytjrl0aa"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Muhammed Ayman",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-2-sj69w86zx"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Nayer Sharar",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-3-g6r7ojt67"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Nilay Dutta",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-4-l5oaecons"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Priangshu Deb",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-5-otys7b1n5"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Sanan Sikder",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-6-ax86obdlf"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Tawhid-Bin-Omar",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-7-ylmq6lpna"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Tayebur Naseef",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-8-6n8dt5i7m"
           },
           {
             "role": "Vice President",
-            "name": "",
+            "name": "Ziad Bin Azad",
             "imageUrl": "",
             "id": "root-panel-executive-former-vicePresidents-9-67m0uneg8"
           }
