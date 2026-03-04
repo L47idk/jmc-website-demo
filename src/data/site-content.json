@@ -940,14 +940,5 @@
     "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616957813-three.jpg",
     "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772616961207-two.jpg"
   ],
-  "notices": [
-    {
-      "id": "notice-1772615072128-7565bb9hx",
-      "title": "fds",
-      "description": "afsadf",
-      "date": "2026-03-04",
-      "imageUrl": "https://gqcwzxnuawpfqvrukcmn.supabase.co/storage/v1/object/public/image/1772615075793-3.pdf",
-      "link": ""
-    }
-  ]
+  "notices": []
 }
