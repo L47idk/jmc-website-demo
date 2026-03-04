@@ -157,7 +157,7 @@ function AppContent({ children }: { children: React.ReactNode }) {
               {/* Bottom Copyright */}
               <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p className="text-[10px] tracking-[0.3em] uppercase font-bold opacity-30">
-                  © JOSEPHITE MATH CLUB 2025 | ALL RIGHTS RESERVED
+                  © JOSEPHITE MATH CLUB 2026 | ALL RIGHTS RESERVED
                 </p>
                 <div className="flex items-center space-x-8">
                   <Link href="/privacy" className="text-[10px] uppercase tracking-widest font-bold opacity-30 hover:opacity-100 transition-opacity">Privacy Policy</Link>
